@@ -1,0 +1,5 @@
+#!/bin/bash
+
+status=`pps /home/kim/.skypos/places/*`
+sss "$status"
+

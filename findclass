@@ -1,0 +1,3 @@
+#!/bin/bash
+
+for line in `cat classpath | sed 's/:/\n/g' ` ; do unzip -l $line ; done | grep "/${1}.class$" | awk '{ print $4 }' | sed 's/\//./g' | sed 's/.class$//g' | sort -d

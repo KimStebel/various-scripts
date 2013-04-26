@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+import Skype4Py
+import sys
+import dbus
+
+def set_pidgin_message(message):
+    # Get current status type (Available/Away/etc.)
+	current = purple.PurpleSavedstatusGetType(purple.PurpleSavedstatusGetCurrent())
+    # Create new transient status and activate it
+	status = purple.PurpleSavedstatusNew("", current)
+	purple.PurpleSavedstatusSetMessage(status, message)
+	purple.PurpleSavedstatusActivate(status)
+
+if len(sys.argv) > 1:
+	#todo: do not hang if skype or pidgin are not running
+	
+	skype = Skype4Py.Skype()
+	skype.Attach()
+	skype.CurrentUserProfile.MoodText = sys.argv[1]
+    
+    #pidgin
+	bus = dbus.SessionBus()
+	obj = bus.get_object("im.pidgin.purple.PurpleService", "/im/pidgin/purple/PurpleObject")
+	purple = dbus.Interface(obj, "im.pidgin.purple.PurpleInterface")
+	set_pidgin_message(sys.argv[1])
+else:
+	print 'too few arguments'
+

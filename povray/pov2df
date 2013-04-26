@@ -1,0 +1,5 @@
+#!/bin/sh
+cd /home/kim/povrayws/povray/
+echo "#declare zd = 1;" >$1.2d.pov
+cat $1.pov >>$1.2d.pov
+povray  +I$1.2d.pov kim2df.ini +P +Q3

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+while [ -n "$1" ]; do
+	if [ -d "$1" ]; then
+		cd "$1"
+		clean-names `/bin/ls -a | grep -v '^\.$' | grep -v '^\.\.$'`
+		cd ..
+		rename 's/_/ /g;s/\./ /g' "$1"
+	else
+		new=`remove_dots "$1"`
+		if [ "$1" != "${new}" -a ! -e "${new}" ]; then
+			mv "$1" "${new}"
+		fi
+		rename 's/_/ /g' "${new}"
+	fi
+	shift
+done
+

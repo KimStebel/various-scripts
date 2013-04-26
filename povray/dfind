@@ -1,0 +1,11 @@
+#!/bin/bash
+cd /home/kim/workspaces/povrayws/povray/
+x=
+if test $2
+then 	
+	x='--after-context='$2
+fi
+grep -n $x "declare $1" ./*
+grep -n $x "macro $1" ./*
+grep -n $x "declare $1" /home/kim/workspaces/povrayws/povray/includes/*
+grep -n $x "macro $1" /home/kim/workspaces/povrayws/povray/includes/*

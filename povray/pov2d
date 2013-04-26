@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "#declare zd = 1;" >$1.2d.pov
+cat $1.pov >>$1.2d.pov
+povray  +I$1.2d.pov kim2df.ini +Q11
+# if !(povray  +I$1c.pov kim2df.ini +Q7 | grep 'parse error' --before-context=10 --after-context=10)
+# then
+# runbg gqview $1c.png
+# fi

@@ -1,0 +1,3 @@
+#!/bin/bash
+export alarmtty=`tty`
+at -f /home/kim/scripts/alarm $1

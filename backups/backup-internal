@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source='/home/kim/'
+dest="${1}"
+day=`date`
+logdir="/home/kim/scripts/backup-logs"
+log="${logdir}/backup-internal-${day}.log"
+elog="${logdir}/backup-internal-errors-${day}.log"
+rsync -axh --progress "${source}" "${dest}" >>"${log}" 2>>"${elog}"
+if [ -s "${elog}" ]
+then
+	touch "/home/kim/Desktop/BACKUP-ERROR"
+fi
+

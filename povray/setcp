@@ -1,0 +1,9 @@
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_1 "/home/kim/scripts/pov2d $1"
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_2 "/home/kim/scripts/povf $1"
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_3 "/home/kim/scripts/pov $1"
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_4 "/home/kim/scripts/pov2df $1"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_1 "<control>b"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_2 "<control>n"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_3 "<control>m"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_4 "<control>v"
+

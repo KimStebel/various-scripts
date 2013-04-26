@@ -1,0 +1,8 @@
+#!/bin/bash
+function call_nautilus {
+	while read line; do
+		nautilus "smb://${line}"
+	done
+}
+nmap -p445 "${1}.2-254" | grep -B2 open | grep 'ports on' | cut --delimiter=' ' -f4 | cut --delimiter=':' -f1 | call_nautilus
+

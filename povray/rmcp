@@ -1,0 +1,10 @@
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_1 ""
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_2 ""
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_3 ""
+gconftool-2 -t str --set /apps/metacity/keybinding_commands/command_4 ""
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_1 "disabled"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_2 "disabled"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_3 "disabled"
+gconftool-2 -t str --set /apps/metacity/global_keybindings/run_command_4 "disabled"
+
+

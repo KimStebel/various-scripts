@@ -1,0 +1,35 @@
+#!/bin/bash
+sflag=
+rflag=
+OPTNUM=0
+while getopts 's:r:' OPTION
+do
+   case $OPTION in
+   s)    sflag=1
+         sval="$OPTARG"
+         ;;
+   r)    rflag=1
+         rval="$OPTARG"
+         ;;
+   esac
+done
+shift $((${OPTIND} - 1))
+
+echo "#declare zd = -1;" >$1_$2.3d.pov
+cat $1.pov >>$1_$2.3d.pov
+if test $2
+then
+  echo "" >>$1_$2.3d.pov
+  echo "camera{$2}" >>$1_$2.3d.pov
+fi
+
+if [ "$sflag" ]
+then
+  if [ "$rflag" ]
+  then
+    sed "s/#declare $sval.*/#declare $sval = $rval/" $1_$2.3d.pov >$1_$2_${rval}.3d.pov
+    povray +I${1}_${2}_${rval}.3d.pov +P kimf.ini +Q3
+  fi
+else
+povray +I${1}_${2}.3d.pov +P kimf.ini +Q3
+fi

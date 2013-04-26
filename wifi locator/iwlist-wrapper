@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/sbin/iwlist wlan1 scanning | egrep -i 'address|quality'
+

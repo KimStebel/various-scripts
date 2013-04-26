@@ -1,0 +1,6 @@
+#!/bin/bash
+pid=`ps ax | grep $1 | grep -v susp | grep -v grep | awk '{print $1}'`
+echo "pid is $pid"
+kill -STOP $pid
+sleep $2
+kill -CONT $pid

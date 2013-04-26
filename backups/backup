@@ -1,0 +1,26 @@
+#!/bin/bash
+
+hdd1=`lsusb | grep "059b:0274"`
+hdd2=`lsusb | grep "059b:0475"`
+mounted1=`ls /media/ext/`
+mounted2=`ls /media/backup/`
+day=`date`
+logdir="/home/kim/scripts"
+log="${logdir}/backup-${day}.log"
+elog="${logdir}/backup-errors-${day}.log"
+if [ "${hdd1}" -a "${hdd2}" -a "${mounted1}" -a "${mounted2}" ] 
+then
+	rsync -axh --progress --delete /media/ext/ /media/backup/750GB/ >>"${log}" 2>>"${elog}"
+	rsync -axh --progress --delete / /media/backup/internal/ >>"${log}" 2>>"${elog}"
+else
+	echo "something isn't right" >>"${elog}"
+	echo "hdd1: $(hdd1)" >>"${elog}"
+	echo "hdd2: $(hdd2)" >>"${elog}"
+	echo "m1: $(mounted1)" >>"${elog}"
+	echo "m2: $(mounted2)" >>"${elog}"
+fi
+if [ -s "${elog}" ]
+then
+	touch "/home/kim/Desktop/BACKUP-ERROR"
+fi
+

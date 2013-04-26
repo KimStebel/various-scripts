@@ -1,0 +1,87 @@
+#!/usr/bin/ruby
+
+def difference(old, new)
+	res = 0
+	old.merge(new).map {|x| x[0]}.uniq.each { |mac|
+		res += ((new[mac]||-1) - (old[mac]||-1)).abs
+	}
+	res
+end
+
+def read_iwlist
+	lines = open("|/sbin/iwlist wlan1 scanning").readlines.grep(/Address|Quality/)
+	res = {}
+	mac, quality = nil, nil
+	lines.each { |l|
+		if l =~ /Address: (.*)$/
+			mac = $1.chomp.strip
+			next
+		end
+		if l =~ /Quality=(\d*)\//
+			quality = $1.chomp.strip.to_i
+			res[mac] = quality
+		end
+	}
+	res
+end
+
+def average(ssmaps)
+	res = {}
+	ssmaps.each do |m|
+		m.each_key do |k|
+			res[k] = (res[k]||0) + m[k]
+		end
+	end
+	res.each_key do |k|
+		res[k] = res[k].fdiv(ssmaps.size)
+	end
+end
+
+def print_usage
+	puts "usage: pps FILENAMES"
+	puts "       pps --save FILENAME"
+end
+
+if ARGV.size == 0
+	print_usage
+	exit 1
+end
+
+if ARGV[0]=="--save"
+	if ARGV.size != 2
+		print_usage
+		exit 1
+	end
+	new = []
+	0.upto 2 do |i|
+		new[i] = read_iwlist
+		sleep 30
+	end
+	placeFile = open ARGV[1],"w+"
+	placeFile.write(average(new).inspect)
+	exit 0
+end
+
+new = read_iwlist
+minDif = 1000000
+bestMatch = nil
+ARGV.each { |filename|
+	posfile = open filename
+	old = eval posfile.readline
+	d = difference(old, new)
+	if d < minDif
+		minDif = d
+		bestMatch = filename
+	end
+}
+
+#oldBestMatch = open("/home/kim/.skypos/current_position").readline.chomp.strip
+
+#if bestMatch != oldBestMatch
+#	f = open("/home/kim/.skypos/current_position", "w")
+#	f.puts(bestMatch)
+#	f.close
+	bestMatch =~ /\/([^\/]*)$/
+	puts `./sss "#{$1.gsub(/_/, ' ')}"`
+#end
+

@@ -1,0 +1,6 @@
+#!/bin/bash
+website=`gdialog --title "Site name" --clear --inputbox "Please enter the name of the website" 16 51 2>&1`
+md5Str=`echo -n "Eliska is cute${website}" | md5sum`
+[[ "${md5Str}" =~ [[:alnum:]]+ ]]
+echo -n "${BASH_REMATCH}" | xclip -i -selection clipboard
+
